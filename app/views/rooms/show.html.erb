@@ -1,11 +1,114 @@
-<!-- app/views/rooms/show.html.erb -->
-<div id="messages" data-room-id="<%= @room.id %>">
-  <% @room.messages.each do |message| %>
-    <%= render 'messages/message', message: message %>
-  <% end %>
+<style>
+  /* General styling */
+  body {
+    position: relative;
+  }
+
+  /* Header styling */
+  header {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    font-size: 20px;
+  }
+
+  /* Style for the Delete button below the header */
+  .delete-room-btn {
+    display: block;
+    margin: 10px auto;
+    text-align: center;
+  }
+
+  /* Container for the scrollable messages */
+  #messages-container {
+    height: 400px; /* Fixed height for the scrollable area */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+  }
+
+  #messages {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .message {
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    max-width: 70%;
+  }
+
+  /* Styling for current user's messages */
+  .message.current-user {
+    margin-left: auto;
+    text-align: right;
+  }
+
+  /* Styling for other users' messages */
+  .message.other-user {
+    margin-right: auto;
+    text-align: left;
+  }
+
+  /* Style for the form container */
+  .form-container {
+    display: block;
+    margin-top: 10px;
+  }
+
+  /* Styling for the Send button */
+  .send-btn {
+    display: block;
+    margin: 5px auto 0 auto; /* Centered under the text area */
+    text-align: right;
+  }
+</style>
+
+<header>
+  <h1>Room: <%= @room.name %> </h1><p class='lead'>Created by: <%=link_to User.find(@room.user_id).email, profile_path(User.find(@room.user_id)),class: "text-decoration-none",style: "color: inherit;"%></p>
+</header>
+<% if current_user.id == @room.user_id%>
+<!-- Delete button below the header -->
+<%= button_to "Delete Room", room_path(@room), method: :delete,
+              class: "btn btn-danger delete-room-btn" %>
+<% end %>
+<!-- Messages container -->
+<div id="messages-container">
+  <div id="messages" data-room-id="<%= @room.id %>">
+    <% @room.messages.each do |message| %>
+      <div class="message <%= message.user == current_user ? 'current-user' : 'other-user' %>">
+        <% if message.user == current_user %>
+        <strong> You: </strong>
+        <% else %>
+          <strong><%= message.user.email %>:</strong>
+        <% end %>
+        <%= message.content %>
+      </div>
+    <% end %>
+  </div>
 </div>
 
-<%= form_with model: [ @room, @room.messages.build ] do |form| %>
-  <%= form.text_area :content, placeholder: "Type a message..." %>
-  <%= form.submit "Send" %>
+<!-- Form for sending messages -->
+<%= form_with model: [@room, @room.messages.build], local: true do |form| %>
+  <div class="form-container">
+    <%= form.text_area :content, placeholder: "Type a message...", rows: 2, class: "form-control-sm", style: "width: 100%; resize: none;" %>
+    <%= form.submit "Send", class: "btn btn-success send-btn" %>
+  </div>
 <% end %>
+
+<script>
+  // Automatically scroll to the bottom of the messages container
+  function scrollToBottom() {
+    const container = document.getElementById("messages-container");
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
+  }
+
+  // Call scrollToBottom on page load
+  document.addEventListener("DOMContentLoaded", scrollToBottom);
+</script>

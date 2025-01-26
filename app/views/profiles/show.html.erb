@@ -15,11 +15,21 @@
             <i class="fas fa-user-circle fa-5x text-secondary"></i>
           </div>
           <h4><%= @user.email %></h4>
+          
           <% if @user.description.present? %>
             <p class="text-muted"><%= @user.description %></p>
           <% else %>
             <p class="text-muted">No description available.</p>
           <% end %>
+
+          <!-- Chat Button for Other Users -->
+          <% if current_user != @user %> 
+          <div class="mt-3">
+            <%= button_to 'Chat', private_chat_path(recipient_id: @user.id), method: :post, class: 'btn btn-primary' %>
+          </div>
+        <% end %>
+
+
           <hr>
           <h5>Friends</h5>
           <% if @user.friends.any? %>

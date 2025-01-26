@@ -1,5 +1,13 @@
 import consumer from "channels/consumer";
 
+/*
+if consumer.js is not found, turn off the server execute this:
+rails assets:clobber
+rails assets:precompile
+and then start the server again
+
+*/
+
 const roomId = document.getElementById("messages").dataset.roomId;
 
 const ChatChannel = consumer.subscriptions.create(
