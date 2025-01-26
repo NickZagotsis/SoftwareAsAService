@@ -17,6 +17,11 @@ class MessagesController < ApplicationController
     else
       render :new
     end
+
+    if @room.room_type == "private"
+      other_user = @room.users.where.not(id: current_user.id).first
+      FriendsNotifier.with(record: @message).deliver(other_user) if other_user
+    end
   end
 
   private

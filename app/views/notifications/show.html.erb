@@ -29,6 +29,18 @@
             <strong><%= User.find(notification.event.record.friend_id).email %></strong> accepted your friend request.
           </a>
         <% end %>
+      
+      <% elsif notification.event.record.is_a?(Message) %>
+        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <div>
+            <a href="<%= profile_path(User.find(notification.event.record.user_id)) %>" class="list-group-item list-group-item-action">
+              <strong><%= User.find(notification.event.record.user_id).email %></strong> sent you a message!
+            </a>
+          </div>
+          <div class="btn-group">
+            <%= button_to "Check it out!", room_path(notification.event.record.room_id), method: :get, class: "btn btn-primary btn-sm" %>
+          </div>
+        </div>
       <% end %>
     <% end %>
   </div>
