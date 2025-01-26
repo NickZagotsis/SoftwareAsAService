@@ -1,5 +1,12 @@
 # README
 
+## Authors
+
+---
+
+- [Nick Zagotsis](https://github.com/NickZagotsis)
+- [Konstantinos Georgopoulos](https://github.com/Gusssskiller)
+
 ## Versions used
 
 ---
