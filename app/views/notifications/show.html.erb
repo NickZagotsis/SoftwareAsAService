@@ -1,0 +1,28 @@
+<div class="notifications-container">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Notifications</h3>
+    <% if @notifications.unread.any? %>
+      <%= form_with url: mark_all_as_read_notifications_path, method: :post, local: true do %>
+        <%= submit_tag "Clear All", class: "btn btn-outline-secondary btn-sm" %>
+      <% end %>
+    <% else %>
+      <span class="text-muted">You are all caught up!</span>
+    <% end %>
+  </div>
+
+  <div class="list-group">
+    <% @notifications.unread.each do |notification| %>
+      <% if notification.event.record.is_a?(Friendship) %>
+        <% if notification.event.record.status == 'pending' %>
+          <a href="<%= profile_path(User.find(notification.event.record.user_id)) %>" class="list-group-item list-group-item-action">
+            <strong><%= User.find(notification.event.record.user_id).email %></strong> sent you a friend request.
+          </a>
+        <% elsif notification.event.record.status == 'accepted' && notification.event.record.friend_id != current_user.id %>
+          <a href="<%= profile_path(User.find(notification.event.record.friend_id)) %>" class="list-group-item list-group-item-action">
+            <strong><%= User.find(notification.event.record.friend_id).email %></strong> accepted your friend request.
+          </a>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

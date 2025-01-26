@@ -84,7 +84,7 @@
         <% if message.user == current_user %>
         <strong> You: </strong>
         <% else %>
-          <strong><%= message.user.email %>:</strong>
+          <strong><%= link_to message.user.email, profile_path(message.user), class: "text-decoration-none",style: "color: inherit;"%>:</strong>
         <% end %>
         <%= message.content %>
       </div>

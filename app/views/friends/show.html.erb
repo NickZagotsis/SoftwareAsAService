@@ -23,14 +23,17 @@
             <% friendship = current_user.friendships.find_by(friend: friend) || current_user.inverse_friendships.find_by(user: friend) %>
 
             <% if friendship.nil? %>
-              <%= button_to "Add Friend", friendships_path(friend_id: friend.id), method: :post, class: "btn btn-success" %>
-            <% elsif friendship.status == "pending" && friendship.user == current_user %>
-              <button class="btn btn-secondary" disabled>Request Pending</button>
-            <% elsif friendship.status == "pending" && friendship.friend == current_user %>
+            <%= button_to "Add Friend", friendships_path(friend_id: friend.id), method: :post, class: "btn btn-success" %>
+          <% elsif friendship.status == "pending" && friendship.user == current_user %>
+            <button class="btn btn-secondary" disabled>Request Pending</button>
+          <% elsif friendship.status == "pending" && friendship.friend == current_user %>
+            <div class="d-flex justify-content-between">
               <%= button_to "Accept Request", friendship_path(friendship), method: :patch, class: "btn btn-primary" %>
-            <% elsif friendship.status == "accepted" %>
-              <%= button_to "Remove Friend", friendship_path(friendship), method: :delete, class: "btn btn-danger" %>
-            <% end %>
+              <%= button_to "Decline Request", friendship_path(friendship), method: :delete, class: "btn btn-danger" %>
+            </div>
+          <% elsif friendship.status == "accepted" %>
+            <%= button_to "Remove Friend", friendship_path(friendship), method: :delete, class: "btn btn-danger" %>
+          <% end %>
           </div>
         </div>
       </div>

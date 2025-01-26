@@ -7,5 +7,10 @@
  * depending on specificity.
  *
  * Consider organizing styles into separate files for maintainability.
+ 
+ *= require font-awesome
+
  */
 /* app/assets/stylesheets/application.css */
+
+

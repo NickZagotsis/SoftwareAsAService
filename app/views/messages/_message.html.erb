@@ -1,5 +1,7 @@
 <!-- app/views/messages/_message.html.erb -->
 <div class="message">
-  <strong><%= message.user.email %>:</strong>
+  <strong><%= link_to message.user.email, profile_path(message.user), class: "text-decoration-none",style: "color: inherit;"%>:</strong>
   <p><%= message.content %></p>
 </div>
+
+

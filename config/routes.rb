@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "notifications/show"
   get "messages/index"
   get "rooms/show"
   get "profiles/show"
@@ -12,6 +13,12 @@ Rails.application.routes.draw do
   resources :rooms, only: [ :index, :show, :new, :create, :destroy ] do
     resources :messages, only: [ :create ]
   end
+  resources :notifications, only: [] do
+    collection do
+      post :mark_all_as_read
+    end
+  end
+
 
   #  change this when you create posts
   # authenticated :user do
