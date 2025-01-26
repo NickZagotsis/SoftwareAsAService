@@ -4,8 +4,8 @@
 
 ---
 
-- [Nick Zagotsis](https://github.com/NickZagotsis)
-- [Konstantinos Georgopoulos](https://github.com/Gusssskiller)
+- [Nick Zagotsis (p21032)](https://github.com/NickZagotsis)
+- [Konstantinos Georgopoulos (p21017)](https://github.com/Gusssskiller)
 
 ## Versions used
 
