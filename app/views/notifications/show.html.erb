@@ -14,9 +14,16 @@
     <% @notifications.unread.each do |notification| %>
       <% if notification.event.record.is_a?(Friendship) %>
         <% if notification.event.record.status == 'pending' %>
+        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            <div>
           <a href="<%= profile_path(User.find(notification.event.record.user_id)) %>" class="list-group-item list-group-item-action">
             <strong><%= User.find(notification.event.record.user_id).email %></strong> sent you a friend request.
           </a>
+          </div>
+          <div class="btn-group">
+              <%= button_to "Accept Request", accept_request_notification_path(notification), method: :patch, class: "btn btn-primary btn-sm" %>
+              <%= button_to "Decline", friendship_path(notification.event.record), method: :delete, class: "btn btn-danger btn-sm" %>
+            </div>
         <% elsif notification.event.record.status == 'accepted' && notification.event.record.friend_id != current_user.id %>
           <a href="<%= profile_path(User.find(notification.event.record.friend_id)) %>" class="list-group-item list-group-item-action">
             <strong><%= User.find(notification.event.record.friend_id).email %></strong> accepted your friend request.

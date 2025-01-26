@@ -30,8 +30,6 @@ class FriendshipsController < ApplicationController
   # Accept a friend request (Update friendship to "accepted" status)
   def update
     @friendship = Friendship.find(params[:id])
-
-
     if @friendship.friend == current_user && @friendship.status == "pending"
       if @friendship.update(status: "accepted")
         flash[:success] = "Friend request accepted."

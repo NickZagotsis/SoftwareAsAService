@@ -19,6 +19,26 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :notifications, only: [ :index, :update ] do
+    member do
+      patch :accept_request  # The new route for accepting friend requests
+    end
+  end
+
+
+
+  Rails.application.routes.draw do
+    post "/signup", to: "registrations#create"
+    post "/auth.login", to: "sessions#create"
+    get "/auth.logout", to: "sessions#destroy"
+
+    resources :todo do
+      resources :todo_item, only: [ :show, :create, :update, :destroy ]
+    end
+  end
+
+
+
 
   #  change this when you create posts
   # authenticated :user do
