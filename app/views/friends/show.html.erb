@@ -1,0 +1,42 @@
+<div class="container d-flex justify-content-center align-items-center vh-200">
+  <%= form_with(url: friends_index_path, method: :get, class: "mb-4") do |form| %>
+    <div class="input-group">
+      <%= form.text_field :search, placeholder: "Search for friends", class: "form-control" %>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+  <% end %>
+</div>
+<% if @friends.any? %>
+  <div class="row">
+    <% @friends.each do |friend| %>
+    <%if friend.email != current_user.email%>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><%= friend.email %></h5>
+            <% if friend.description.present? %>
+              <p class="card-text"><%= friend.description %></p>
+            <% else %>
+              <p class="card-text">Sadly, no description was found</p>
+            <% end %>
+
+            <% friendship = current_user.friendships.find_by(friend: friend) || current_user.inverse_friendships.find_by(user: friend) %>
+
+            <% if friendship.nil? %>
+              <%= button_to "Add Friend", friendships_path(friend_id: friend.id), method: :post, class: "btn btn-success" %>
+            <% elsif friendship.status == "pending" && friendship.user == current_user %>
+              <button class="btn btn-secondary" disabled>Request Pending</button>
+            <% elsif friendship.status == "pending" && friendship.friend == current_user %>
+              <%= button_to "Accept Request", friendship_path(friendship), method: :patch, class: "btn btn-primary" %>
+            <% elsif friendship.status == "accepted" %>
+              <%= button_to "Remove Friend", friendship_path(friendship), method: :delete, class: "btn btn-danger" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <%end%>
+    <% end %>
+  </div>
+<% else %>
+  <p>No friends found.</p>
+<% end %>
