@@ -1,13 +1,16 @@
 Rails.application.routes.draw do
+  get "friends/index"
+  get "friends/show"
   resources :posts
   devise_for :users
+  resources :friendships, only: [ :create, :update, :destroy ]
   root "home#index"
 
-#  change this when you create posts
+  #  change this when you create posts
   # authenticated :user do
   #   root 'posts#index', as: :authenticated_root
   # end
-  
+
   # unauthenticated do
   #   root 'home#index', as: :unauthenticated_root
   # end

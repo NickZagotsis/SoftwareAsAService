@@ -1,16 +1,22 @@
+ <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4" style="max-width: 500px; width: 100%;text-align:center;">
+
 <h2>Forgot your password?</h2>
 
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control",placeholder:"email", style:"text-align:center;"%>
   </div>
-
   <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
+    <br>
+    <%= f.submit "Send me reset password instructions",class:"btn btn-warning" %>
+    <br><br>
+    <%=link_to "Login",new_user_session_path,class:"btn btn-success"%>
+    <%=link_to "Sign up",new_user_registration_path,class:"btn btn-primary"%>
   </div>
 <% end %>
 
-<%= render "devise/shared/links" %>
+</div>
+</div>

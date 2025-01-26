@@ -15,8 +15,17 @@
           <%# <a class="nav-link" href="#">Link</a> %>
           <%= link_to 'Posts', posts_path , class:"nav-link active"%>
         </li>
+        <li>
+          <%= link_to 'Add a friend', friends_index_path , class:"nav-link active"%>
+        </li>
+        <li>
+          <%= link_to 'Contacts', friends_show_path , class:"nav-link active"%>
+        </li>
         </ul>
+        <div class="d-flex gap-2">
+      <%= link_to 'Profile', edit_user_registration_path, class:"btn btn-success"%> 
       <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-danger"%>
+      </div>
     </div>
   </div>
 </nav>

@@ -1,0 +1,28 @@
+
+ <div class="container d-flex justify-content-center align-items-center vh-200">
+
+<%= form_with(url: friends_index_path, method: :get, class: "mb-4") do |form| %>
+  <div class="input-group">
+    <%= form.text_field :search, placeholder: "Search for friends", class: "form-control" %>
+    <button type="submit" class="btn btn-primary">Search</button>
+  </div>
+<% end %>
+</div>
+
+<% if @friends.any? %>
+  <div class="row">
+    <% @friends.each do |friend| %>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><%= friend.email %></h5>
+            <p class="card-text">This is a brief description of the user or any relevant info you want to show.</p>
+            <%= button_to "Add Friend", "#", class: "btn btn-success", disabled: true %> <!-- Button does nothing for now -->
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p>No friends found.</p>
+<% end %>
