@@ -1,0 +1,11 @@
+<!-- app/views/rooms/show.html.erb -->
+<div id="messages" data-room-id="<%= @room.id %>">
+  <% @room.messages.each do |message| %>
+    <%= render 'messages/message', message: message %>
+  <% end %>
+</div>
+
+<%= form_with model: [ @room, @room.messages.build ] do |form| %>
+  <%= form.text_area :content, placeholder: "Type a message..." %>
+  <%= form.submit "Send" %>
+<% end %>

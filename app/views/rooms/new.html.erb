@@ -1,0 +1,11 @@
+<h1>Δημιουργία Νέου Δωματίου</h1>
+
+<%= form_with model: @room, local: true do |f| %>
+  <div>
+    <%= f.label :name, "Όνομα Δωματίου" %>
+    <%= f.text_field :name, required: true, placeholder: "Εισάγετε όνομα δωματίου" %>
+  </div>
+  <div>
+    <%= f.submit "Δημιουργία" %>
+  </div>
+<% end %>

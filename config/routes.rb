@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "messages/index"
+  get "rooms/show"
   get "profiles/show"
   get "friends/index"
   get "friends/show"
@@ -7,6 +9,9 @@ Rails.application.routes.draw do
   resources :friendships, only: [ :create, :update, :destroy ]
   resources :profiles, only: [ :show ]
   root "home#index"
+  resources :rooms, only: [ :index, :show, :new, :create ] do
+    resources :messages, only: [ :create ]
+  end
 
   #  change this when you create posts
   # authenticated :user do

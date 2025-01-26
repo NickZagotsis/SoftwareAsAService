@@ -1,0 +1,11 @@
+<h1>Όλα τα Rooms</h1>
+
+<%= link_to "Δημιουργία Νέου Δωματίου", new_room_path, class: "button" %>
+
+<ul>
+  <% @rooms.each do |room| %>
+    <li>
+      <%= link_to room.name, room_path(room) %>
+    </li>
+  <% end %>
+</ul>
