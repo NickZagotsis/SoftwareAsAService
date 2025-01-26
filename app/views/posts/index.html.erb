@@ -12,6 +12,7 @@
         <div class="card shadow-sm" style="text-align:center;border-radius: 10px;">
           <h3><%=post.title%></h3>
           <p><strong>Category: </strong><%=post.category%></p>
+          <p><strong>Posted by: </strong><%= link_to post.user.email, profile_path(post.user), class: "text-decoration-none",style: "color: inherit;"%></p>
           <p>
             <%= link_to "Show this post", post, class:"btn btn-primary" %>
           </p>

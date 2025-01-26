@@ -3,7 +3,7 @@
     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center" style="border-radius: 15px 15px 0 0;">
       <h1 class="mb-0">
         <%= @post.title %> 
-        <small class="text-light" style="font-size: 0.4em;">by <%= @post.user.email %></small>
+        <small class="text-light" style="font-size: 0.4em;">by <%= link_to @post.user.email, profile_path(@post.user), class: "text-decoration-none",style: "color: inherit;"%></small>
       </h1>
       <% if @post.user == current_user %>
       <div class="d-flex gap-2">

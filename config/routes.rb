@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
+  get "profiles/show"
   get "friends/index"
   get "friends/show"
   resources :posts
   devise_for :users
   resources :friendships, only: [ :create, :update, :destroy ]
+  resources :profiles, only: [ :show ]
   root "home#index"
 
   #  change this when you create posts
