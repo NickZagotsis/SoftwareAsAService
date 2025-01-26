@@ -1,4 +1,3 @@
-# app/controllers/messages_controller.rb
 class MessagesController < ApplicationController
   def create
     @room = Room.find(params[:room_id])
@@ -6,7 +5,6 @@ class MessagesController < ApplicationController
     @message.user = current_user
 
     if @message.save
-      # Εκπέμπουμε το μήνυμα μέσω του ActionCable
       ChatChannel.broadcast_to(
         @room,
         message: render_message(@message)
@@ -14,7 +12,7 @@ class MessagesController < ApplicationController
 
       respond_to do |format|
         format.html { redirect_to room_path(@room) }
-        format.js   # Επιστρέφει JS για να ανανεωθεί η σελίδα
+        format.js
       end
     else
       render :new
