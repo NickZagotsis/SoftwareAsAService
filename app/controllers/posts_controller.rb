@@ -1,12 +1,21 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
+  before_action :correct_user, only: [ :edit, :update, :destroy ]
   before_action :set_post, only: %i[ show edit update destroy ]
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    if params[:search].present?
+      @posts = Post.where("title LIKE ? OR category LIKE ?", "%#{params[:search]}%", "%#{params[:search]}%")
+    else
+      @posts = Post.all
+    end
   end
 
+  def correct_user
+    @post = current_user.posts.find_by(id: params[:id])
+    redirect_to posts_path, notice: "Not Authorized To Edit This Post" if @post.nil?
+  end
   # GET /posts/1 or /posts/1.json
   def show
   end
@@ -26,7 +35,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: "Post was successfully created." }
+        format.html { redirect_to posts_path, success: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +48,7 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to @post, notice: "Post was successfully updated." }
+        format.html { redirect_to posts_path, success: "Post was successfully updated." }
         format.json { render :show, status: :ok, location: @post }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -53,7 +62,7 @@ class PostsController < ApplicationController
     @post.destroy!
 
     respond_to do |format|
-      format.html { redirect_to posts_path, status: :see_other, notice: "Post was successfully destroyed." }
+      format.html { redirect_to posts_path, status: :see_other, success: "Post was successfully destroyed." }
       format.json { head :no_content }
     end
   end

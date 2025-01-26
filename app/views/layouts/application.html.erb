@@ -33,8 +33,24 @@
   <body>
     <%= render "/home/header" %>
     <!-- Main Content -->
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+        <% if flash[:success] %>
+        <div class="alert alert-success" role="alert">
+          <%= flash[:success] %>
+        </div>
+      <% end %>
+
+      <% if flash[:notice] %>
+        <div class="alert alert-info" role="alert">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+
+      <% if flash[:alert] %>
+        <div class="alert alert-danger" role="alert">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+
     <div class="container">
       <br/>
       <%= yield %> <!-- Renders content from the specific view -->

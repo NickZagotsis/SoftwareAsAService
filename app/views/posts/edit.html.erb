@@ -1,12 +1,16 @@
+ <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4" style="max-width: 400px; width: 100%;">
 <% content_for :title, "Editing post" %>
 
-<h1>Editing post</h1>
+<h1 style="text-align: center;">Editing post</h1>
 
 <%= render "form", post: @post %>
 
 <br>
 
-<div>
+<div style="text-align: center;">
   <%= link_to "Show this post", @post %> |
   <%= link_to "Back to posts", posts_path %>
+</div>
+</div>
 </div>
